@@ -23,7 +23,7 @@ $(KERNEL_DIRECTORY):
 
 
 # Initramfs build targets
-initramfs: initfs initfs/init
+initramfs: initfs initfs/init initfs/bin/busybox
 	cd initfs/ && find . | cpio -o --format=newc > ../initramfs
 
 initfs/init: initfs init.sh
