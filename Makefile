@@ -40,7 +40,7 @@ initfs/bin/busybox: $(BUSYBOX_DIRECTORY)
 	bash symlink-busybox.sh
 
 initfs:
-	mkdir -p initfs/bin
+	mkdir -p initfs/bin initfs/proc initfs/dev initfs/sys
 
 
 # Utility targets
