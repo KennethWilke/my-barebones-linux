@@ -1,0 +1,5 @@
+initfs/
+initramfs
+vmlinuz
+linux-4.13.3.tar.xz
+linux-4.13.3/
