@@ -5,3 +5,6 @@ linux-4.15.tar.xz
 linux-4.15/
 busybox-1.28.0.tar.bz2
 busybox-1.28.0/
+barebones.iso
+iso/boot/vmlinuz
+iso/boot/initramfs

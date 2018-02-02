@@ -8,7 +8,6 @@ BUSYBOX_DIRECTORY=busybox-$(BUSYBOX_VERSION)
 BUSYBOX_ARCHIVE=$(BUSYBOX_DIRECTORY).tar.bz2
 BUSYBOX_URL=https://busybox.net/downloads/$(BUSYBOX_ARCHIVE)
 
-
 all: vmlinuz initramfs
 
 
@@ -42,11 +41,19 @@ initfs/bin/busybox: $(BUSYBOX_DIRECTORY)
 initfs:
 	mkdir -p initfs/bin initfs/proc initfs/dev initfs/sys
 
+barebones.iso: vmlinuz initramfs
+	mkdir -p iso/boot/grub
+	cp vmlinuz initramfs iso/boot/.
+	grub-mkrescue -o $@ iso
 
 # Utility targets
 runvm: vmlinuz initramfs
 	qemu-system-x86_64 -m 2048 -kernel vmlinuz -initrd initramfs
 
+runiso: barebones.iso
+	qemu-system-x86_64 -m 2048 -cdrom barebones.iso -boot d
+
 clean:
-	rm -rf vmlinuz $(KERNEL_DIRECTORY) $(KERNEL_ARCHIVE) $(BUSYBOX_DIRECTORY) \
-		$(BUSYBOX_ARCHIVE)
+	rm -rf vmlinuz initramfs $(KERNEL_DIRECTORY) $(KERNEL_ARCHIVE) \
+	$(BUSYBOX_DIRECTORY) $(BUSYBOX_ARCHIVE) iso/boot/vmlinuz \
+	iso/boot/initramfs barebones.iso
